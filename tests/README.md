@@ -52,6 +52,8 @@ skill-creator を使って ~/.claude/skills/ai-work-design を評価してくだ
 
 実際の配置場所に合わせてSkillパスは変更してください。
 
+公開版として固定する前の厳密な再実行条件と、そのままClaude Codeへ渡せる指示は [release-gate.md](release-gate.md) にまとめています。
+
 ## ベンチマーク履歴
 
 - [2026-08-12 Claude.ai 初回ベンチマーク](results/2026-08-12-claude-ai/benchmark.md)
