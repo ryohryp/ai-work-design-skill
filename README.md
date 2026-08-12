@@ -8,6 +8,8 @@
 
 このリポジトリは、本の内容を要約したり代替したりするものではありません。本でフレームワークを理解した読者が、実際の業務を設計するための実践ツールです。
 
+`SKILL.md` を中心とした Agent Skills 形式で作っているため、CodexとClaude Codeで同じSkill本体を利用できます。環境ごとに別のフレームワークを保守する必要はありません。
+
 ## 何ができるか
 
 - 対象業務の「本当の目的」を整理する
@@ -35,9 +37,9 @@
 
 ## 使い方
 
-### 1. Skillをインストールする
+### Codex
 
-Codexでは、次のどちらかの方法を使えます。
+#### 1. Skillをインストールする
 
 **Skillインストーラーを使う場合**
 
@@ -56,7 +58,7 @@ $skill-installer で https://github.com/ryohryp/ai-work-design-skill の skills/
 
 CodexがSkillを認識しない場合は、Codexを再起動してください。Skillの公式仕様と配置場所は、[OpenAI公式ドキュメント](https://developers.openai.com/codex/skills)でも確認できます。
 
-### 2. 対話を始める
+#### 2. 対話を始める
 
 Codex CLIまたはIDE拡張では、`$` でSkillを明示できます。
 
@@ -66,13 +68,34 @@ $ai-work-design を使って、毎週の売上報告作成を見直したいで�
 
 ChatGPTデスクトップアプリでもStandalone Skillを利用でき、Skillが利用可能な状態なら `@` で明示して呼び出せます。利用方法や対応環境は、[OpenAI公式ドキュメント](https://developers.openai.com/codex/skills)で最新情報を確認してください。
 
-明示しなくても、依頼内容がSkillの `description` と一致すれば暗黙に選ばれる場合があります。
+### Claude Code
+
+#### 1. Skillをインストールする
+
+このリポジトリの `skills/ai-work-design` を、Claude CodeのPersonal Skillフォルダへコピーします。
+
+- macOS / Linux: `$HOME/.claude/skills/ai-work-design`
+- Windows: `%USERPROFILE%\.claude\skills\ai-work-design`
+
+特定のプロジェクトだけで使いたい場合は、そのリポジトリ内の `.claude/skills/ai-work-design` に配置できます。
+
+Claude CodeのSkill仕様と配置場所は、[Anthropic公式ドキュメント](https://code.claude.com/docs/en/skills)で確認できます。
+
+#### 2. 対話を始める
+
+Claude Codeでは、`/` でSkillを明示して呼び出せます。
+
+```text
+/ai-work-design 毎週の売上報告作成を見直したいです。
+```
+
+依頼内容がSkillの `description` と一致する場合は、Claudeが自動的にSkillを選ぶこともできます。
+
+### 共通の流れ
 
 最初に確認されるのは、対象業務と目的です。その後、利用条件のGateを通過できた場合だけ、八つの問いを順に進めます。
 
-### 3. 最終シートを保存・レビューする
-
-対話の最後に、次の内容を含むMarkdownが生成されます。
+対話の最後に、次の内容を含むMarkdown形式の「AI仕事設計シート」が生成されます。
 
 - 利用条件のGate判定
 - タスク分解と評価
@@ -105,6 +128,8 @@ Skillの変更で挙動が崩れていないか確認するため、[手動Eval�
 
 通常ケースだけでなく、未承認環境でのGate停止、L4の過剰委譲、AIの自己チェックだけを検証とみなすケース、単なる製品比較でSkillが誤起動しないことなどを確認します。
 
+同じEvalケースをCodexとClaude Codeの両方で実行すると、モデルや実行環境による挙動差も比較できます。
+
 ## ファイル構成
 
 ```text
@@ -123,7 +148,9 @@ tests/
   eval-cases.md
 ```
 
-`agents/openai.yaml` はSkill一覧に表示する名前などの任意メタデータです。Webアプリ、MCP、バックエンド、認証、データベース、外部依存関係はありません。
+`SKILL.md` と `references/worksheet.md` が共通のSkill本体です。`agents/openai.yaml` はOpenAI側のSkill一覧表示などに使う任意メタデータで、Claude Code向けに別のSkill本文を持つ必要はありません。
+
+Webアプリ、MCP、バックエンド、認証、データベース、外部依存関係はありません。
 
 ## ライセンス
 
