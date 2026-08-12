@@ -124,11 +124,13 @@ Claude Codeでは、`/` でSkillを明示して呼び出せます。
 
 ## 検証
 
-Skillの変更で挙動が崩れていないか確認するため、[手動Evalケース](tests/eval-cases.md)を用意しています。
+Skillの変更で挙動が崩れていないか確認するため、[手動Evalケース](tests/eval-cases.md)と [`evals/evals.json`](skills/ai-work-design/evals/evals.json) を用意しています。
 
-通常ケースだけでなく、未承認環境でのGate停止、L4の過剰委譲、AIの自己チェックだけを検証とみなすケース、単なる製品比較でSkillが誤起動しないことなどを確認します。
+通常ケースだけでなく、未承認環境でのGate停止、L4の過剰委譲、AIの自己チェックだけを検証とみなすケース、曖昧な「AI化」依頼で目的確認を飛ばさないことなどを確認します。
 
-同じEvalケースをCodexとClaude Codeの両方で実行すると、モデルや実行環境による挙動差も比較できます。
+2026-08-12のリリースゲートでは、強化後29アサーションに対して **with-skill 29/29 PASS**、without-skill 4% となり、重大原則のFAILは0件でした。[判定書](tests/results/2026-08-12-claude-ai-release-gate/release-gate-verdict.md)と[ベンチマーク](tests/results/2026-08-12-claude-ai-release-gate/benchmark.md)を公開しています。
+
+この結果は、同一Claude.ai環境が実行と採点を担当し、既存出力を強化後assertionで再採点した回帰テストです。独立した性能保証とは扱いません。今後 `SKILL.md` を変更する場合は、[リリースゲート](tests/release-gate.md)を再実行します。
 
 ## ファイル構成
 
@@ -140,12 +142,18 @@ skills/
     SKILL.md
     agents/
       openai.yaml
+    evals/
+      evals.json
     references/
       worksheet.md
 examples/
   simple-example.md
 tests/
+  README.md
   eval-cases.md
+  release-gate.md
+  results-template.md
+  results/
 ```
 
 `SKILL.md` と `references/worksheet.md` が共通のSkill本体です。`agents/openai.yaml` はOpenAI側のSkill一覧表示などに使う任意メタデータで、Claude Code向けに別のSkill本文を持つ必要はありません。
