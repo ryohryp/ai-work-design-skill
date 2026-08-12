@@ -58,13 +58,15 @@ CodexがSkillを認識しない場合は、Codexを再起動してください�
 
 ### 2. 対話を始める
 
-Codex CLIまたはIDE拡張では、次のように呼び出します。
+Codex CLIまたはIDE拡張では、`$` でSkillを明示できます。
 
 ```text
 $ai-work-design を使って、毎週の売上報告作成を見直したいです。
 ```
 
-ChatGPTでも、Skillsに対応したプラン・環境では利用できます。利用可否やインストール方法は、[OpenAI公式ヘルプ](https://help.openai.com/en/articles/20001066-skills-in-chatgpt)で最新情報を確認してください。
+ChatGPTデスクトップアプリでもStandalone Skillを利用でき、Skillが利用可能な状態なら `@` で明示して呼び出せます。利用方法や対応環境は、[OpenAI公式ドキュメント](https://developers.openai.com/codex/skills)で最新情報を確認してください。
+
+明示しなくても、依頼内容がSkillの `description` と一致すれば暗黙に選ばれる場合があります。
 
 最初に確認されるのは、対象業務と目的です。その後、利用条件のGateを通過できた場合だけ、八つの問いを順に進めます。
 
@@ -97,6 +99,12 @@ ChatGPTでも、Skillsに対応したプラン・環境では利用できます�
 
 [会議後処理の簡単な例](examples/simple-example.md)を収録しています。特定企業の情報や、書籍で扱う出版プロジェクトの完全なケーススタディは含めていません。
 
+## 検証
+
+Skillの変更で挙動が崩れていないか確認するため、[手動Evalケース](tests/eval-cases.md)を用意しています。
+
+通常ケースだけでなく、未承認環境でのGate停止、L4の過剰委譲、AIの自己チェックだけを検証とみなすケース、単なる製品比較でSkillが誤起動しないことなどを確認します。
+
 ## ファイル構成
 
 ```text
@@ -111,6 +119,8 @@ skills/
       worksheet.md
 examples/
   simple-example.md
+tests/
+  eval-cases.md
 ```
 
 `agents/openai.yaml` はSkill一覧に表示する名前などの任意メタデータです。Webアプリ、MCP、バックエンド、認証、データベース、外部依存関係はありません。
