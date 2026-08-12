@@ -55,8 +55,10 @@
 3. **Eval1のアサーション5・Eval2のアサーション7・Eval5のアサーション2/4はいずれも今回新設・強化されたばかりで、実績が1回分のみです。** 今後複数回・複数モデルで安定してPASSすることを確認できると、より信頼できるゲートになります。
 4. Eval3の「本人通知の自動実行」assertionは今回も変更されていませんが、通知チャネルや誤通知時の巻き戻し手順まで具体化するassertionを追加すると、さらに弁別力が上がる可能性があります（今回の出力は既に人間確認を残しているためPASSですが、より詳細な設計を要求する余地があります）。
 
-## ファイル一覧
+## このリポジトリに保存した結果
 
-- `benchmark.json` / `benchmark.md` — 集計結果
-- `eval-*-*/eval_metadata.json` — 各evalのプロンプト・強化後assertions
-- `eval-*-*/{with_skill,without_skill}/run-1/{transcript.md, outputs/*.md, grading.json}` — 各ケースの詳細
+- `release-gate-verdict.md` — リリースゲート判定書
+- `benchmark.md` — 集計サマリー
+- `benchmark.json` — assertionごとの採点根拠を含む集計データ
+
+Claude.ai側の元ワークスペースには各ケースのtranscriptやgradingもありましたが、このリポジトリには今回受け取った上記3成果物だけを保存しています。
