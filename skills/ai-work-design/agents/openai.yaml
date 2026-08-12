@@ -1,4 +1,4 @@
 interface:
   display_name: "AI仕事設計"
-  short_description: "八つの問いでAI活用と検証を対話設計する公式Skill"
+  short_description: "書籍『AI仕事設計』の八つの問いで業務を対話設計"
   default_prompt: "$ai-work-design を使って、この仕事のAI活用と人間の役割分担を設計してください。"
